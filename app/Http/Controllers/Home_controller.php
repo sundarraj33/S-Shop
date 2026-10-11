@@ -124,13 +124,30 @@ class Home_controller extends Controller
             'status' => 'success',
             'message' => 'Product deleted successfully'
         ]);
-    if ($storeProduct) {
-        
-        return back()->with('success', 'Product deleted successfully');
+        if ($storeProduct) {
+            
+            return back()->with('success', 'Product deleted successfully');
+        }
+
+        return back()->with('error', 'Product not found');
+
     }
 
-    return back()->with('error', 'Product not found');
 
+    public function show_cart(){
+        $user_id = session('user_id');
+
+        $store_product_details = Store_product::where('user_id',$user_id)->get();
+
+        $master_product_details = product_master::select('id','title','brand','type','amount','image_url')
+            ->whereIn('id',$store_product_details->pluck('product_id'))
+            ->get();
+
+        // return session('user_id');
+        return view('templates.sample',[
+            'store_product_details' => $store_product_details,
+            'master_product_details' => $master_product_details,
+        ]);
     }
 
 

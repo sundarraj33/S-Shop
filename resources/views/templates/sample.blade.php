@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S-Shop - Shopping Cart</title>
   <style>
     :root {
       --primary: #1e293b;
@@ -243,18 +242,13 @@
       }
     }
   </style>
+  @include('templates.link')
 </head>
 <body>
 
   <!-- Header -->
-  <header>
-    <div class="logo">S-SHOP</div>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Men</a>
-      <a href="#">Women</a>
-    </nav>
-  </header>
+ @include('templates.Navbar')
+ 
 
   <!-- Stepper -->
   <div class="stepper">
@@ -276,51 +270,60 @@
   <div class="cart-container">
     <!-- Left: Cart Items List -->
     <div class="cart-items">
-      
-      <!-- Item Card 1 -->
-      <div class="cart-card">
-        <img src="https://via.placeholder.com/90x110" alt="Product">
-        <div class="item-info">
-          <div class="item-title">NEONOMAD Olive Shirt</div>
-          <div class="item-meta">Size: L | Color: Grey</div>
-          <div class="quantity-control">
-            <button>-</button>
-            <span>1</span>
-            <button>+</button>
-          </div>
-        </div>
-        <div class="item-price">₹420</div>
-        <button class="delete-btn">🗑</button>
-      </div>
+      {{-- {{ session('user_id')}} --}}
+    
+      @php
+        $total_sum = 0;
 
-      <!-- Item Card 2 -->
-      <div class="cart-card">
-        <img src="https://via.placeholder.com/90x110" alt="Product">
-        <div class="item-info">
-          <div class="item-title">NEONOMAD Cotton Shirt</div>
-          <div class="item-meta">Size: L | Color: White</div>
-          <div class="quantity-control">
-            <button>-</button>
-            <span>1</span>
-            <button>+</button>
-          </div>
-        </div>
-        <div class="item-price">₹420</div>
-        <button class="delete-btn">🗑</button>
-      </div>
+      @endphp
+
+      {{-- {{ $total_sum }} --}}
+      @foreach($store_product_details as $store_data) 
+
+       {{ $store_data}}
+       @endforeach
+      
+      @foreach($master_product_details as $master_data)
+        @foreach($store_product_details as $store_data)                    
+          @if($master_data->id == $store_data->product_id)  
+
+            @php 
+              $total_sum += $master_data->amount
+            @endphp
+
+            <div class="cart-card" class="product">
+                <img src='{{ $master_data->image_url}}' alt="Product">
+                <div class="item-info">
+                  <div class="item-title">{{ $master_data->title }}</div>
+                  <div class="item-meta">Size: {{ $store_data->product_size }} | Color:  {{ $store_data->product_color }}</div>
+                   <div class="quantity-control">
+                      <button type="button" class="minus">-</button>
+                      <span class="quantity">1</span>
+                      <button type="button" class="plus">+</button>
+                  </div>
+              </div>
+              <div class="item-price total">₹{{ $master_data->amount }}</div>
+              <button class="delete-btn" id='delete_btn' value="{{$store_data->id}}">🗑</button>
+            </div>
+
+          @endif
+        @endforeach
+      @endforeach
 
     </div>
+
+    
 
     <!-- Right: Order Summary Card -->
     <div class="cart-summary">
       <h3>Cart Details</h3>
       <div class="summary-row">
         <span>Subtotal</span>
-        <span>₹840.00</span>
+        <span>₹{{ $total_sum }}.00</span>
       </div>
       <div class="summary-row discount">
-        <span>Discount (10%)</span>
-        <span>- ₹84.00</span>
+        <span>Discount (5%)</span>
+        <span>- ₹{{ $total_sum*5/100 }}</span>
       </div>
       <div class="summary-row">
         <span>Shipping Fee</span>
@@ -328,12 +331,71 @@
       </div>
       <div class="summary-row total">
         <span>Total</span>
-        <span>₹806.00</span>
+        <span>₹{{ $total_sum - $total_sum*5/100 + 50}}</span>
       </div>
 
       <button class="checkout-btn">Continue →</button>
     </div>
   </div>
 
+
+  <script>
+    $(document).ready(function(){        
+        $(".delete-btn").click(function(){            
+            var store_product_id = $(this).val();
+            
+            $.ajax({
+                url : "{{ url('delete_store_product')}}",
+                type : "POST",
+                data : {
+                    _token : "{{ csrf_token() }}",                    
+                    store_product_id : store_product_id
+                },
+                success: function(success_res){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: success_res.message,
+                        confirmButtonColor: '#3085d6'
+                    });
+
+                    console.log(success_res);
+                    location.reload();
+                },
+                error: function(error_res){
+                    console.log(res)
+                }
+            });
+        });
+
+
+        $(".plus").click(function(){  
+            let quantityElement = $(this).siblings(".quantity");                    
+            let quantity = $(".quantity").text();            
+            quantity++;           
+            quantityElement.text(quantity);
+            updateAmount(product, quantity);
+        });
+
+
+        $(".minus").click(function(){
+            let quantityElement = $(this).siblings(".quantity");                    
+            let quantity = $(".quantity").text();                               
+            
+            if (quantity > 1) {
+              quantity--;
+              quantityElement.text(quantity);
+            }          
+          updateAmount(product, quantity);
+        });
+
+        
+        function updateAmount(product, quantity) {
+          let price = parseFloat(product.find('.price').text());
+          let total = price * quantity;
+          product.find('.total').text(total.toFixed(2));
+        }
+    });
+</script>
 </body>
 </html>

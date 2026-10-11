@@ -137,35 +137,7 @@
 
 </div>
 
-<script>
-    $(document).ready(function(){
-        
-        $(".delete-btn").click(function(){            
-            var store_product_id = $(this).val();
-            
-            $.ajax({
-                url : "{{ url('delete_store_product')}}",
-                type : "POST",
-                data : {
-                    _token : "{{ csrf_token() }}",                    
-                    store_product_id : store_product_id
-                },
-                success: function(success_res){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: success_res.message,
-                        confirmButtonColor: '#3085d6'
-                    });
-                    console.log(success_res);
-                },
-                error: function(error_res){
-                    console.log(res)
-                }
-            });
-        });
-    });
-</script>
+
 
 </body>
 </html>

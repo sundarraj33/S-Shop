@@ -1,5 +1,5 @@
 <style>
-            .modal-backdrop {
+.modal-backdrop {
     display: none !important;
 }
 
