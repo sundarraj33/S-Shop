@@ -48,14 +48,6 @@ body.modal-open {
                 </svg>
             </button>
 
-
-            <!-- ACCOUNT -->
-            {{-- <button class="nav-icon desktop-icon">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="7" r="4"></circle>
-                    <path d="M5 21c0-4 3-7 7-7s7 3 7 7"></path>
-                </svg>
-            </button> --}}
             <button class="icon-btn nav-icon desktop-icon"
                 type="button"
                 data-bs-toggle="modal"
@@ -81,15 +73,10 @@ body.modal-open {
 
             <!-- CART -->
             <button class="nav-icon cart-icon">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 3h2l2 13h10l3-9H6"></path>
-                    <circle cx="9" cy="20" r="1"></circle>
-                    <circle cx="18" cy="20" r="1"></circle>
-                </svg>
-
+                <a href="{{ url('show_cart')}}">
+                <i class="fa-solid fa-cart-shopping"></i>
+                </a>
                 <span class="cart-count">2</span>
-
             </button>
 
 
@@ -111,13 +98,13 @@ body.modal-open {
 
 <script>
     const menuToggle = document.getElementById("menuToggle");
-const navMenu = document.getElementById("navMenu");
+    const navMenu = document.getElementById("navMenu");
 
-menuToggle.addEventListener("click", function () {
+    menuToggle.addEventListener("click", function () {
 
-    navMenu.classList.toggle("active");
+        navMenu.classList.toggle("active");
 
-});
+    });
 </script>
 
 

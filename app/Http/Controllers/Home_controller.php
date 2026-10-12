@@ -86,26 +86,10 @@ class Home_controller extends Controller
             'product_color' => $req->color,
             'product_uptime' => $currentTime,
             'user_id' =>  $req->user_id,
-        ]);
-        
-        
+        ]);                
 
         if($store_product){
-            $userid = session('user_id');
-
-            $store_product_details = Store_product::where('user_id',$userid)->get();
-
-            $master_product_details = product_master::select('id','title','brand','type','amount','image_url')
-                        ->whereIn('id',$store_product_details->pluck('product_id'))
-                        ->get();
-                        
-
-
-            return view('Cart',[
-                'store_product_details' => $store_product_details,
-                'master_product_details' => $master_product_details,
-            ]);
-            return "product store";
+            return redirect()->route('product.cart');
         }else{
             return "product not store";
         }
@@ -144,7 +128,7 @@ class Home_controller extends Controller
             ->get();
 
         // return session('user_id');
-        return view('templates.sample',[
+        return view('Cart',[
             'store_product_details' => $store_product_details,
             'master_product_details' => $master_product_details,
         ]);

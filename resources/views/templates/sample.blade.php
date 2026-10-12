@@ -1,9 +1,25 @@
+
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+@include('templates.link')
+
+<style>
+   * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+        background: #f5f6fa;
+        color: #222;
+        /* padding: 35px 0px; */
+    }
+
+
     :root {
       --primary: #1e293b;
       --accent: #d97706;
@@ -87,176 +103,225 @@
       color: white;
     }
 
-    /* Container Layout */
-    .cart-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem 4rem;
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 2rem;
+
+    .checkout-container {
+        max-width: 1100px;
+        margin: auto;
     }
 
-    /* Items Section */
-    .cart-items {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .page-title {
+        margin-bottom: 25px;
     }
 
-    .cart-card {
-      background: var(--card-bg);
-      padding: 1.25rem;
-      border-radius: 12px;
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      border: 1px solid var(--border);
+    .page-title h2 {
+        font-size: 28px;
+        margin-bottom: 8px;
     }
 
-    .cart-card img {
-      width: 90px;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 8px;
+    .page-title p {
+        color: #777;
+        font-size: 14px;
     }
 
-    .item-info {
-      flex: 1;
+    .checkout-layout {
+        display: grid;
+        grid-template-columns: 1.7fr 1fr;
+        gap: 25px;
+        align-items: start;
     }
 
-    .item-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        margin-bottom: 20px;
     }
 
-    .item-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
+    .card-title {
+        font-size: 19px;
+        margin-bottom: 22px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .quantity-control {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
+   
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
     }
 
-    .quantity-control button {
-      background: #f1f5f9;
-      border: none;
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
-      font-weight: bold;
+    .form-group {
+        margin-bottom: 19px;
     }
 
-    .quantity-control span {
-      padding: 0 12px;
-      font-size: 0.9rem;
+    label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
     }
 
-    .item-price {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary);
+    input, select, textarea {
+        width: 100%;
+        padding: 12px 13px;
+        border: 1px solid #d9dce3;
+        border-radius: 7px;
+        font-size: 14px;
+        background: white;
+        outline: none;
     }
 
-    .delete-btn {
-      background: #fef2f2;
-      border: none;
-      color: #ef4444;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
+    input:focus, select:focus, textarea:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37,99,235,.08);
     }
 
-    .delete-btn:hover {
-      background: #fee2e2;
+    textarea {
+        min-height: 85px;
+        resize: vertical;
     }
 
-    /* Summary Card */
-    .cart-summary {
-      background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-      border: 1px solid var(--border);
-      height: fit-content;
+    .address-types {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 22px;
     }
 
-    .cart-summary h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.75rem;
+    .address-type {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: 12px 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .address-type input {
+        width: auto;
+        accent-color: #2563eb;
+    }
+
+    .default-option {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        margin: 5px 0 22px;
+        font-size: 14px;
+    }
+
+    .default-option input {
+        width: auto;
+        accent-color: #2563eb;
+    }
+
+    .default-option label {
+        margin: 0;
+        font-weight: normal;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px;
+        background: #2563eb;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #1d4ed8;
+    }
+
+    .summary-title {
+        font-size: 19px;
+        margin-bottom: 20px;
     }
 
     .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.85rem;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .summary-row.discount {
-      color: #10b981;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+        font-size: 14px;
+        color: #666;
     }
 
     .summary-row.total {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text);
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-      margin-top: 1rem;
+        border-top: 1px solid #eee;
+        padding-top: 17px;
+        font-size: 17px;
+        color: #222;
+        font-weight: bold;
     }
 
-    .checkout-btn {
-      width: 100%;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.9rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: opacity 0.2s;
+    .delivery-note {
+        padding: 13px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.6;
+        margin-bottom: 20px;
     }
 
-    .checkout-btn:hover {
-      opacity: 0.9;
+    #message {
+        display: none;
+        margin-bottom: 20px;
+        padding: 13px;
+        border-radius: 7px;
+        font-size: 14px;
     }
 
-    @media (max-width: 768px) {
-      .cart-container {
-        grid-template-columns: 1fr;
-      }
+    #message.success {
+        display: block;
+        background: #dcfce7;
+        color: #166534;
     }
-  </style>
-  @include('templates.link')
+
+    #message.error {
+        display: block;
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    @media(max-width: 750px) {
+        .checkout-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .card {
+            padding: 20px;
+        }
+    }
+</style>
+
+
 </head>
+
 <body>
 
-  <!-- Header -->
- @include('templates.Navbar')
- 
+  @include('templates.Navbar')
+<div class="checkout-container">
 
-  <!-- Stepper -->
-  <div class="stepper">
+   <div class="stepper">
     <div class="step active">
       <div class="step-number">1</div>
       <span>Shopping Cart</span>
     </div>
-    <div class="step">
+    <div class="step active">
       <div class="step-number">2</div>
       <span>Shipping Address</span>
     </div>
@@ -266,136 +331,198 @@
     </div>
   </div>
 
-  <!-- Cart Content -->
-  <div class="cart-container">
-    <!-- Left: Cart Items List -->
-    <div class="cart-items">
-      {{-- {{ session('user_id')}} --}}
-    
-      @php
-        $total_sum = 0;
 
-      @endphp
+    <div id="message" role="status" aria-live="polite"></div>
 
-      {{-- {{ $total_sum }} --}}
-      @foreach($store_product_details as $store_data) 
+    <form id="addressForm">
+        <div class="checkout-layout">
 
-       {{ $store_data}}
-       @endforeach
-      
-      @foreach($master_product_details as $master_data)
-        @foreach($store_product_details as $store_data)                    
-          @if($master_data->id == $store_data->product_id)  
+            <div>
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step">1</span>
+                        Contact Information
+                    </h3>
 
-            @php 
-              $total_sum += $master_data->amount
-            @endphp
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input id="firstName" name="first_name"
+                                   type="text" placeholder="First name" required>
+                        </div>
 
-            <div class="cart-card" class="product">
-                <img src='{{ $master_data->image_url}}' alt="Product">
-                <div class="item-info">
-                  <div class="item-title">{{ $master_data->title }}</div>
-                  <div class="item-meta">Size: {{ $store_data->product_size }} | Color:  {{ $store_data->product_color }}</div>
-                   <div class="quantity-control">
-                      <button type="button" class="minus">-</button>
-                      <span class="quantity">1</span>
-                      <button type="button" class="plus">+</button>
-                  </div>
-              </div>
-              <div class="item-price total">₹{{ $master_data->amount }}</div>
-              <button class="delete-btn" id='delete_btn' value="{{$store_data->id}}">🗑</button>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input id="lastName" name="last_name"
+                                   type="text" placeholder="Last name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input id="email" name="email"
+                                   type="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Mobile Number *</label>
+                            <input id="phone" name="phone"
+                                   type="tel" placeholder="10-digit mobile number"
+                                   pattern="[0-9]{10}" maxlength="10" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title">
+                        <span class="step">2</span>
+                        Delivery Address
+                    </h3>
+
+                    <div class="form-group">
+                        <label for="address">House No. / Building Name *</label>
+                        <input id="address" name="address"
+                               type="text" placeholder="Flat 101, ABC Apartments" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="street">Street / Area / Locality *</label>
+                        <input id="street" name="street"
+                               type="text" placeholder="Street, area or locality" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pincode">PIN Code *</label>
+                            <input id="pincode" name="pincode"
+                                   type="text" placeholder="6-digit PIN code"
+                                   pattern="[0-9]{6}" maxlength="6" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input id="city" name="city"
+                                   type="text" placeholder="Enter city" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <input id="state" name="state"
+                                   type="text" placeholder="Enter state" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Country *</label>
+                            <select id="country" name="country" required>
+                                <option value="India" selected>India</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="landmark">Landmark (Optional)</label>
+                        <input id="landmark" name="landmark"
+                               type="text" placeholder="Near bus stop, school, etc.">
+                    </div>
+
+                    <label>Address Type</label>
+                    <div class="address-types">
+                        <label class="address-type">
+                            <input type="radio" name="address_type"
+                                   value="Home" checked>
+                            🏠 Home
+                        </label>
+
+                        <label class="address-type">
+                            <input type="radio" name="address_type"
+                                   value="Work">
+                            🏢 Work
+                        </label>
+                    </div>
+
+                    <div class="default-option">
+                        <input type="checkbox" id="defaultAddress"
+                               name="is_default" value="1">
+                        <label for="defaultAddress">
+                            Set as my default shipping address
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        Save & Continue to Payment →
+                    </button>
+                </div>
             </div>
 
-          @endif
-        @endforeach
-      @endforeach
+            <div>
+                <div class="card">
+                    <h3 class="summary-title">Order Summary</h3>
 
-    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹1,500.00</span>
+                    </div>
 
-    
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="shipping">₹50.00</span>
+                    </div>
 
-    <!-- Right: Order Summary Card -->
-    <div class="cart-summary">
-      <h3>Cart Details</h3>
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span>₹{{ $total_sum }}.00</span>
-      </div>
-      <div class="summary-row discount">
-        <span>Discount (5%)</span>
-        <span>- ₹{{ $total_sum*5/100 }}</span>
-      </div>
-      <div class="summary-row">
-        <span>Shipping Fee</span>
-        <span>₹50.00</span>
-      </div>
-      <div class="summary-row total">
-        <span>Total</span>
-        <span>₹{{ $total_sum - $total_sum*5/100 + 50}}</span>
-      </div>
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span style="color:green">− ₹100.00</span>
+                    </div>
 
-      <button class="checkout-btn">Continue →</button>
-    </div>
-  </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="grandTotal">₹1,450.00</span>
+                    </div>
 
+                    <div class="delivery-note">
+                        🚚 Your order will be delivered to the address
+                        provided here.
+                    </div>
 
-  <script>
-    $(document).ready(function(){        
-        $(".delete-btn").click(function(){            
-            var store_product_id = $(this).val();
-            
-            $.ajax({
-                url : "{{ url('delete_store_product')}}",
-                type : "POST",
-                data : {
-                    _token : "{{ csrf_token() }}",                    
-                    store_product_id : store_product_id
-                },
-                success: function(success_res){
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: success_res.message,
-                        confirmButtonColor: '#3085d6'
-                    });
+                    <p style="font-size:12px;color:#777;line-height:1.6">
+                        Your address details will be used for delivery
+                        and order updates.
+                    </p>
+                </div>
+            </div>
 
-                    console.log(success_res);
-                    location.reload();
-                },
-                error: function(error_res){
-                    console.log(res)
-                }
-            });
-        });
+        </div>
+    </form>
+</div>
 
+<script>
+  const form = document.getElementById("addressForm");
+  const message = document.getElementById("message");
 
-        $(".plus").click(function(){  
-            let quantityElement = $(this).siblings(".quantity");                    
-            let quantity = $(".quantity").text();            
-            quantity++;           
-            quantityElement.text(quantity);
-            updateAmount(product, quantity);
-        });
+  form.addEventListener("submit", function(event) {
+      event.preventDefault();
 
+      if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+      }
 
-        $(".minus").click(function(){
-            let quantityElement = $(this).siblings(".quantity");                    
-            let quantity = $(".quantity").text();                               
-            
-            if (quantity > 1) {
-              quantity--;
-              quantityElement.text(quantity);
-            }          
-          updateAmount(product, quantity);
-        });
+      message.className = "success";
+      message.textContent =
+          "Address details validated successfully! Connect this form to Laravel to save the address and continue to payment.";
 
-        
-        function updateAmount(product, quantity) {
-          let price = parseFloat(product.find('.price').text());
-          let total = price * quantity;
-          product.find('.total').text(total.toFixed(2));
-        }
-    });
+      message.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+      });
+  });
 </script>
+
 </body>
 </html>
