@@ -158,7 +158,13 @@ class Home_controller extends Controller
 
         if($product_address){
 
-            Store_product
+            Store_product::where([
+                'user_id'=>$req->user_id,
+                'status' => 'pending'
+                ])->update([
+                    'status' => 'processing',
+                    'address_id' => $product_address->id
+                ]);            
             return "Your Data is register";
         }else{
             return "Your Data is not register";
