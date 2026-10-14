@@ -139,7 +139,7 @@
         <span>₹{{ $total_sum - $total_sum*5/100 + 50}}</span>
       </div>
 
-      <button class="checkout-btn">Continue →</button>
+      <a href="{{ url('sample')}}"><button class="checkout-btn">Continue →</button></a>
     </div>
   </div>
 

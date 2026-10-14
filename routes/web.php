@@ -7,7 +7,7 @@ use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Candidate_controller;
 
 Route::get('/sample', function () {
-   return view('templates.sample');
+   return view('templates.Cart_address');
 });
 
 Route::get('/',[Home_controller::class,'home'])->name('home.index');
@@ -22,6 +22,8 @@ Route::get('/show_cart',[Home_controller::class,'show_cart'])->name('product.car
 Route::post('/store_product',[Home_controller::class,'store_product'])->name('store_product');
 Route::post('/delete_store_product',[Home_controller::class,'delete_store_product'])->name('delete_store_product');
 
+
+Route::post('/store_address',[Home_controller::class,'store_address'])->name('store_address');
 // --------------------------------------
 //  Candidates 
 // -------------------------------------

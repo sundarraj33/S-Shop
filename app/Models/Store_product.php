@@ -17,6 +17,8 @@ class Store_product extends Model
         'product_color',
         'product_uptime',
         'user_id',
+        'status',
+        'address_id',
     ];
 
     public $timestamps = false;

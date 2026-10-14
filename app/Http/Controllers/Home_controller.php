@@ -8,6 +8,7 @@ use App\Models\product_master;
 use App\Models\product_image;
 use App\Models\product_color;
 use App\Models\Store_product;
+use App\Models\product_address;
 
 use Illuminate\Http\Request;
 
@@ -132,6 +133,37 @@ class Home_controller extends Controller
             'store_product_details' => $store_product_details,
             'master_product_details' => $master_product_details,
         ]);
+    }
+
+
+
+    public function store_address(Request $req){         
+
+        $product_address = product_address::create([
+            'first_name' => $req->first_name,
+            'last_name' => $req->last_name,
+            'email' => $req->email,
+            'phone' => $req->phone,
+            'address' => $req->address,
+            'street' => $req->street,
+            'pincode' => $req->pincode,
+            'city' => $req->city,
+            'state' => $req->state,
+            'country' => $req->country,
+            'landmark' => $req->landmark,
+            'address_type' => $req->address_type,
+            'user_id' => $req->user_id,
+            'status' => 'processing'
+        ]);
+
+        if($product_address){
+
+            Store_product
+            return "Your Data is register";
+        }else{
+            return "Your Data is not register";
+        }
+        // return $req;
     }
 
 
